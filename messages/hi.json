@@ -215,8 +215,7 @@
     "passwordHint": "कम से कम 8 अक्षर।",
     "createSchool": "विद्यालय बनाएँ",
     "creating": "बनाया जा रहा है…",
-    "haveAccount": "पहले से पंजीकृत?",
-    "demoHint": "डेमो: kavya@sunrise.example / Demo@12345"
+    "haveAccount": "पहले से पंजीकृत?"
   },
   "validation": {
     "required": "यह जानकारी आवश्यक है",

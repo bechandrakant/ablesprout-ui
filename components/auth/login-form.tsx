@@ -74,7 +74,6 @@ export function LoginForm() {
           {t("registerLink")}
         </Link>
       </p>
-      <p className="rounded-lg bg-muted p-3 text-center text-muted-foreground">{t("demoHint")}</p>
     </form>
   );
 }

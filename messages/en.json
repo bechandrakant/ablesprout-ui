@@ -215,8 +215,7 @@
     "passwordHint": "At least 8 characters.",
     "createSchool": "Create school",
     "creating": "Creating…",
-    "haveAccount": "Already registered?",
-    "demoHint": "Demo: kavya@sunrise.example / Demo@12345"
+    "haveAccount": "Already registered?"
   },
   "validation": {
     "required": "This field is required",
