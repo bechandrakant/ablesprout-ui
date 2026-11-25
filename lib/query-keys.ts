@@ -1,0 +1,16 @@
+export const qk = {
+  me: ["me"] as const,
+  users: (role?: string) => ["users", role ?? "all"] as const,
+  students: (params: object = {}) => ["students", params] as const,
+  student: (id: string) => ["student", id] as const,
+  assessments: (studentId: string) => ["assessments", studentId] as const,
+  ieps: (studentId: string) => ["ieps", studentId] as const,
+  caseloadIeps: (params: object) => ["caseload-ieps", params] as const,
+  goalProgress: (goalId: string) => ["goal-progress", goalId] as const,
+  recentProgress: ["recent-progress"] as const,
+  worksheets: (studentId: string) => ["worksheets", studentId] as const,
+  worksheet: (id: string) => ["worksheet", id] as const,
+  messages: (studentId: string) => ["messages", studentId] as const,
+  schoolAnalytics: ["analytics", "school"] as const,
+  studentAnalytics: (id: string) => ["analytics", "student", id] as const,
+};

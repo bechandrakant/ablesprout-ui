@@ -1,26 +1,164 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-body);
+  --font-heading: var(--font-display);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-brand-blue: #2563eb;
+  --color-brand-teal: #14b8a6;
+  --color-brand-teal-dark: #0f766e;
+  --color-brand-orange: #f59e0b;
+  --color-ink: #1e293b;
+  --color-success: #15803d;
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  /* Accessibility: no text smaller than 16px anywhere (shadcn defaults use 12-14px). */
+  --text-xs: 1rem;
+  --text-xs--line-height: 1.5;
+  --text-sm: 1rem;
+  --text-sm--line-height: 1.5;
+  --shadow-soft: 0 1px 2px rgb(15 23 42 / 0.04), 0 4px 16px rgb(15 23 42 / 0.06);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Brand palette. Every text/background pair below meets WCAG 2.1 AA (4.5:1). */
+:root {
+  --font-body: var(--font-inter), system-ui, sans-serif;
+  --font-display: var(--font-poppins), var(--font-inter), system-ui, sans-serif;
+  --background: #f8fafc;
+  --foreground: #1e293b;
+  --card: #ffffff;
+  --card-foreground: #1e293b;
+  --popover: #ffffff;
+  --popover-foreground: #1e293b;
+  --primary: #2563eb; /* 5.2:1 with white */
+  --primary-foreground: #ffffff;
+  --secondary: #ccfbf1; /* teal-100, text teal-900 */
+  --secondary-foreground: #134e4a;
+  --muted: #f1f5f9;
+  --muted-foreground: #475569; /* slate-600: 7.2:1 on white */
+  --accent: #eff6ff;
+  --accent-foreground: #1e3a8a;
+  --destructive: #dc2626;
+  --border: #e2e8f0;
+  --input: #cbd5e1;
+  --ring: #2563eb;
+  --radius: 0.75rem;
+}
+
+/* Accessibility toggles (set on <html> by the header toggle, persisted in localStorage). */
+html[data-text="large"] {
+  font-size: 118.75%; /* 19px base */
+}
+html[data-font="dyslexic"] {
+  --font-body: var(--font-lexend), system-ui, sans-serif;
+  --font-display: var(--font-lexend), system-ui, sans-serif;
+}
+html[data-font="dyslexic"] body {
+  letter-spacing: 0.03em;
+  word-spacing: 0.1em;
+  line-height: 1.75;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-background text-foreground font-sans text-base antialiased;
+    line-height: 1.6;
+  }
+  h1, h2, h3, h4 {
+    @apply font-heading text-ink tracking-tight;
+  }
+  /* Strong, always-visible keyboard focus ring. */
+  :focus-visible {
+    outline: 3px solid #2563eb;
+    outline-offset: 2px;
+  }
+  select, input[type="checkbox"], input[type="radio"] {
+    accent-color: #2563eb;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .card-soft {
+    @apply rounded-2xl border border-border bg-card shadow-soft;
+  }
+  .field {
+    @apply flex h-11 w-full rounded-lg border border-input bg-white px-3 text-base text-foreground shadow-xs transition-colors placeholder:text-muted-foreground focus-visible:border-primary disabled:opacity-50 aria-invalid:border-destructive;
+  }
+  .skip-link {
+    @apply sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:shadow-soft;
+  }
+}
+
+/* ---------- Worksheet print view: honours the learner's adaptations ---------- */
+.worksheet {
+  --ws-size: 1.125rem;
+  font-size: var(--ws-size);
+  line-height: 1.7;
+  color: #111827;
+}
+.worksheet.ws-large-print { --ws-size: 1.5rem; line-height: 1.8; }
+.worksheet.ws-dyslexia {
+  font-family: var(--font-lexend), system-ui, sans-serif;
+  background: #fdf8e8;
+  letter-spacing: 0.05em;
+  word-spacing: 0.16em;
+  line-height: 1.9;
+}
+.worksheet.ws-extra-spacing .ws-question { margin-bottom: 2.25rem; }
+.worksheet.ws-high-contrast { background: #fff; color: #000; }
+.worksheet.ws-high-contrast .ws-line, .worksheet.ws-high-contrast .ws-box { border-color: #000; border-width: 2px; }
+.ws-line { border-bottom: 1px solid #94a3b8; height: 2.2em; }
+.ws-box { border: 1px dashed #94a3b8; border-radius: 0.75rem; min-height: 6rem; }
+
+@media print {
+  @page { margin: 14mm; }
+  body { background: #fff !important; }
+  .no-print { display: none !important; }
+  .print-only { display: block !important; }
+  .worksheet { box-shadow: none !important; border: 0 !important; }
+  .ws-question { break-inside: avoid; }
+}
+.print-only { display: none; }
+
+@keyframes indeterminate {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(300%); }
 }
